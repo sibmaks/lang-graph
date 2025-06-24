@@ -14,7 +14,7 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
-import { treeData, TreeNode } from '../data/treeData';
+import { rootNodeId, treeData, TreeNode } from '../data/treeData';
 import { getLang, Language } from '../i18n';
 import LanguageSwitcher from './LanguageSwitcher';
 import { Button, Col, Container, Row } from 'react-bootstrap';
@@ -174,7 +174,7 @@ const TreeFlow = () => {
   };
 
   useEffect(() => {
-    const elements = generateElements('root', treeData);
+    const elements = generateElements(rootNodeId, treeData);
     setEdges(elements.edges);
 
     if (!initialPositionsCalculated.current) {
@@ -199,7 +199,7 @@ const TreeFlow = () => {
 
     setNodes(prevNodes =>
       prevNodes.map(node => {
-        const treeNode = findTreeNode("root", treeData, node.id);
+        const treeNode = findTreeNode(rootNodeId, treeData, node.id);
         if (!treeNode) return node;
 
         return {

@@ -64,7 +64,8 @@ function buildTree(parentId: string): Record<string, TreeNode> {
   return children;
 }
 
+export const rootNodeId = 'proto-language'
 export const treeData: TreeNode = {
-  ...createNode('proto-language'),
-  children: buildTree('proto-language')
+  ...createNode(rootNodeId),
+  children: buildTree(rootNodeId)
 };
