@@ -1,30 +1,60 @@
 export type TreeNode = {
-  id: string;
   label: { en: string; ru: string };
-  children?: TreeNode[];
+  type: 'language' | 'family';
+  appeared?: Appeared;
+  children?: Record<string, TreeNode>;
 };
 
+export interface Appeared {
+  type: 'IN' | 'FROM';
+  step: 'MILLENNIUM';
+  from: number;
+  to?: number;
+  era: 'BC' | 'AC';
+}
+
 export const treeData: TreeNode = {
-  id: 'root',
-  label: { en: 'Root', ru: 'Корень' },
-  children: [
-    {
-      id: 'child-1',
-      label: { en: 'Child 1', ru: 'Потомок 1' },
-      children: [
-        {
-          id: 'child-1-1',
-          label: { en: 'Child 1.1', ru: 'Потомок 1.1' },
-        },
-        {
-          id: 'child-1-2',
-          label: { en: 'Child 1.2', ru: 'Потомок 1.2' },
-        },
-      ],
+  type: 'language',
+  label: { en: 'Proto lang', ru: 'Прото язык' },
+  appeared: {
+    type: 'IN',
+    step: 'MILLENNIUM',
+    from: 13,
+    to: 14,
+    era: 'BC'
+  },
+  children: {
+    'nostratic-langs-family': {
+      type: 'family',
+      label: { en: 'Nostratic languages', ru: 'Ностратические языки' },
+      appeared: {
+        type: 'IN',
+        step: 'MILLENNIUM',
+        from: 10,
+        to: 11,
+        era: 'BC'
+      }
     },
-    {
-      id: 'child-2',
-      label: { en: 'Child 2', ru: 'Потомок 2' },
+    'dene-caucasian-family': {
+      type: 'family',
+      label: { en: 'Dene–Caucasian languages', ru: 'Сино-кавказские языки' },
+      appeared: {
+        type: 'FROM',
+        step: 'MILLENNIUM',
+        from: 9,
+        era: 'BC'
+      }
     },
-  ],
+    'afroasiatic-family': {
+      type: 'family',
+      label: { en: 'Afroasiatic languages', ru: 'Афразийские языки' },
+      appeared: {
+        type: 'IN',
+        step: 'MILLENNIUM',
+        from: 10,
+        to: 11,
+        era: 'BC'
+      }
+    }
+  }
 };
