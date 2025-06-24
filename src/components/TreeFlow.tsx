@@ -24,6 +24,17 @@ type ExpandedMap = Record<string, boolean>;
 type NodePosition = { x: number; y: number };
 type PositionMap = Record<string, NodePosition>;
 
+const findTreeNode = (node: TreeNode, id: string): TreeNode | null => {
+  if (node.id === id) return node;
+  if (node.children) {
+    for (const child of node.children) {
+      const found = findTreeNode(child, id);
+      if (found) return found;
+    }
+  }
+  return null;
+};
+
 const TreeFlow = () => {
   const [expanded, setExpanded] = useState<ExpandedMap>({ root: true });
   const [lang, setLang] = useState<Language>(getLang());
@@ -31,6 +42,41 @@ const TreeFlow = () => {
   const [edges, setEdges] = useState<Edge[]>([]);
   const nodePositionsRef = useRef<PositionMap>({});
   const initialPositionsCalculated = useRef(false);
+  const langRef = useRef(lang);
+
+  useEffect(() => {
+    langRef.current = lang;
+  }, [lang]);
+
+  const generateLabel = useCallback((node: TreeNode): React.ReactNode => {
+    const hasChildren = node.children && node.children.length > 0;
+    return (
+      <Container fluid={true}>
+        <Row>
+          <Col xs={hasChildren ? 8 : 12} className={'m-auto'}>
+            {node.label[langRef.current]}
+          </Col>
+          {hasChildren && (
+            <Col xs={4}>
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.dispatchEvent(
+                    new CustomEvent('expand-node', { detail: node.id })
+                  );
+                }}
+              >
+                {expanded[node.id] ? <MaterialSymbolsKeyboardArrowDownRounded width={16} height={16} /> :
+                  <MaterialSymbolsKeyboardArrowUpRounded width={16} height={16} />}
+              </Button>
+            </Col>
+          )}
+        </Row>
+      </Container>
+    );
+  }, [expanded]);
 
   const handleExpand = useCallback((e: CustomEvent<string>) => {
     const id = e.detail;
@@ -55,41 +101,16 @@ const TreeFlow = () => {
   ): { nodes: Node[]; edges: Edge[] } => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
-
     const hasChildren = node.children && node.children.length > 0;
-    const label = (
-      <Container fluid={true}>
-        <Row>
-          <Col xs={hasChildren ? 8 : 12} className={'m-auto'}>
-            {node.label[lang]}
-          </Col>
-          {hasChildren && (
-            <Col xs={4}>
-              <Button
-                variant="outline-primary"
-                size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  window.dispatchEvent(
-                    new CustomEvent('expand-node', { detail: node.id })
-                  );
-                }}
-              >
-                {expanded[node.id] ? <MaterialSymbolsKeyboardArrowDownRounded width={16} height={16} /> :
-                  <MaterialSymbolsKeyboardArrowUpRounded width={16} height={16} />}
-              </Button>
-            </Col>
-          )}
-        </Row>
-      </Container>
-    );
 
     const savedPosition = nodePositionsRef.current[node.id];
     const position = savedPosition || { x: xOffset, y: level * 120 };
 
     const currentNode: Node = {
       id: node.id,
-      data: { label },
+      data: {
+        label: generateLabel(node)
+      },
       position,
       type: parentId === null ? 'input' : (hasChildren ? undefined : 'output'),
     };
@@ -127,7 +148,7 @@ const TreeFlow = () => {
     }
 
     return { nodes, edges };
-  }, [expanded, lang]);
+  }, [expanded, generateLabel]);
 
   const onNodesChange: OnNodesChange = (changes) => {
     setNodes((nds) => {
@@ -155,21 +176,40 @@ const TreeFlow = () => {
       setEdges(elements.edges);
       initialPositionsCalculated.current = true;
     } else {
+      const elements = generateElements(treeData);
+      setEdges(elements.edges);
+
       setNodes(prevNodes => {
         const existingNodesMap = new Map(prevNodes.map(node => [node.id, node]));
-        const newElements = generateElements(treeData);
 
-        return newElements.nodes.map(newNode => {
+        return elements.nodes.map(newNode => {
           const existingNode = existingNodesMap.get(newNode.id);
           return existingNode
             ? { ...existingNode, data: newNode.data }
             : newNode;
         });
       });
-
-      setEdges(generateElements(treeData).edges);
     }
   }, [generateElements]);
+
+  useEffect(() => {
+    if (!initialPositionsCalculated.current) return;
+
+    setNodes(prevNodes =>
+      prevNodes.map(node => {
+        const treeNode = findTreeNode(treeData, node.id);
+        if (!treeNode) return node;
+
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            label: generateLabel(treeNode)
+          }
+        };
+      })
+    );
+  }, [lang, generateLabel]);
 
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative' }}>
