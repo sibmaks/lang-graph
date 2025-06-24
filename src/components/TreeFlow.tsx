@@ -1,18 +1,32 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import ReactFlow, { Background, Controls, Edge, Node, Position, } from 'reactflow';
+import ReactFlow, {
+  applyEdgeChanges,
+  applyNodeChanges,
+  Background,
+  BackgroundVariant,
+  Controls,
+  Edge,
+  MiniMap,
+  Node,
+  OnEdgesChange,
+  OnNodesChange,
+  Panel
+} from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import { treeData, TreeNode } from '../data/treeData';
-import { getLang, Language, messages } from '../i18n';
+import { getLang, Language } from '../i18n';
 import LanguageSwitcher from './LanguageSwitcher';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import { MaterialSymbolsKeyboardArrowDownRounded, MaterialSymbolsKeyboardArrowUpRounded } from '../icons';
 
 type ExpandedMap = Record<string, boolean>;
 
 const TreeFlow = () => {
   const [expanded, setExpanded] = useState<ExpandedMap>({ root: true });
   const [lang, setLang] = useState<Language>(getLang());
-
-  const t = messages[lang];
+  const [nodes, setNodes] = useState<Node[]>([]);
+  const [edges, setEdges] = useState<Edge[]>([]);
 
   const handleExpand = useCallback((e: CustomEvent<string>) => {
     const id = e.detail;
@@ -29,7 +43,7 @@ const TreeFlow = () => {
     };
   }, [handleExpand]);
 
-  const generateElements = (
+  const generateElements = useCallback((
     node: TreeNode,
     parentId: string | null = null,
     level = 0,
@@ -38,30 +52,39 @@ const TreeFlow = () => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 
+    const hasChildren = node.children && node.children.length > 0;
     const label = (
-      <div>
-        {node.label}{' '}
-        {node.children && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              window.dispatchEvent(
-                new CustomEvent('expand-node', { detail: node.id })
-              );
-            }}
-          >
-            {expanded[node.id] ? '−' : '+'}
-          </button>
-        )}
-      </div>
+      <Container fluid={true}>
+        <Row>
+          <Col xs={hasChildren ? 8 : 12} className={'m-auto'}>
+            {node.label[lang]}
+          </Col>
+          {hasChildren && (
+            <Col xs={4}>
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.dispatchEvent(
+                    new CustomEvent('expand-node', { detail: node.id })
+                  );
+                }}
+              >
+                {expanded[node.id] ? <MaterialSymbolsKeyboardArrowDownRounded width={16} height={16} /> :
+                  <MaterialSymbolsKeyboardArrowUpRounded width={16} height={16} />}
+              </Button>
+            </Col>
+          )}
+        </Row>
+      </Container>
     );
 
     const currentNode: Node = {
       id: node.id,
       data: { label },
-      position: { x: xOffset, y: level * 100 },
-      sourcePosition: Position.Bottom,
-      targetPosition: Position.Top,
+      position: { x: xOffset, y: level * 120 },
+      type: parentId === null ? 'input' : (hasChildren ? undefined : 'output'),
     };
 
     nodes.push(currentNode);
@@ -74,8 +97,8 @@ const TreeFlow = () => {
       });
     }
 
-    if (expanded[node.id] && node.children) {
-      node.children.forEach((child, index) => {
+    if (expanded[node.id] && hasChildren) {
+      node.children!.forEach((child, index) => {
         const childElements = generateElements(
           child,
           node.id,
@@ -88,19 +111,40 @@ const TreeFlow = () => {
     }
 
     return { nodes, edges };
+  }, [expanded, lang]);
+
+  const onNodesChange: OnNodesChange = (changes) => {
+    setNodes((nds) => applyNodeChanges(changes, nds));
   };
 
-  const { nodes, edges } = generateElements({
-    ...treeData,
-    label: t.root,
-  });
+  const onEdgesChange: OnEdgesChange = (changes) => {
+    setEdges((eds) => applyEdgeChanges(changes, eds));
+  };
+
+  useEffect(() => {
+    const elements = generateElements(treeData);
+
+    setNodes(elements.nodes);
+    setEdges(elements.edges);
+  }, [generateElements]);
 
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative' }}>
-      <LanguageSwitcher onChange={setLang} />
-      <ReactFlow nodes={nodes} edges={edges} fitView>
-        <Background />
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        fitView
+        nodesConnectable={false}
+        nodesDraggable={true}
+      >
+        <Background variant={BackgroundVariant.Lines} />
         <Controls />
+        <MiniMap />
+        <Panel position={'top-right'}>
+          <LanguageSwitcher onChange={setLang} />
+        </Panel>
       </ReactFlow>
     </div>
   );
