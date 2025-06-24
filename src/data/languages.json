@@ -1,0 +1,625 @@
+{
+    "proto-language": {
+        "type": "language",
+        "appeared": {
+            "type": "IN",
+            "step": "MILLENNIUM",
+            "from": 13,
+            "to": 14,
+            "era": "BC"
+        }
+    },
+    "nostratic-langs-family": {
+        "parent": "proto-language",
+        "type": "family",
+        "appeared": {
+            "type": "IN",
+            "step": "MILLENNIUM",
+            "from": 10,
+            "to": 11,
+            "era": "BC"
+        }
+    },
+    "dene–caucasian-family": {
+        "parent": "proto-language",
+        "type": "family",
+        "appeared": {
+            "type": "FROM",
+            "step": "MILLENNIUM",
+            "from": 9,
+            "era": "BC"
+        }
+    },
+    "afroasiatic-family": {
+        "parent": "proto-language",
+        "type": "family",
+        "appeared": {
+            "type": "IN",
+            "step": "MILLENNIUM",
+            "from": 10,
+            "to": 11,
+            "era": "BC"
+        }
+    },
+    "indo-european-group": {
+        "parent": "nostratic-langs-family",
+        "type": "group",
+        "appeared": {
+            "type": "FROM",
+            "step": "MILLENNIUM",
+            "from": 4,
+            "era": "BC"
+        }
+    },
+    "kartvelian-family": {
+        "parent": "nostratic-langs-family",
+        "type": "family",
+        "appeared": {
+            "type": "FROM",
+            "step": "MILLENNIUM",
+            "from": 3,
+            "era": "BC"
+        }
+    },
+    "svan-language": {
+        "parent": "kartvelian-family",
+        "type": "language"
+    },
+    "georgian-language": {
+        "parent": "kartvelian-family",
+        "type": "language"
+    },
+    "zan-languages": {
+        "parent": "kartvelian-family",
+        "type": "group"
+    },
+    "mingrelian-language": {
+        "parent": "zan-languages",
+        "type": "language"
+    },
+    "laz-language": {
+        "parent": "zan-languages",
+        "type": "language"
+    },
+    "dravidian-family": {
+        "parent": "nostratic-langs-family",
+        "type": "family",
+        "appeared": {
+            "type": "IN",
+            "step": "MILLENNIUM",
+            "from": 3,
+            "to": 4,
+            "era": "BC"
+        }
+    },
+    "telugu-language": {
+        "parent": "dravidian-family",
+        "type": "language"
+    },
+    "elamite-language": {
+        "parent": "dravidian-family",
+        "type": "language"
+    },
+    "brahui-language": {
+        "parent": "dravidian-family",
+        "type": "language"
+    },
+    "tamil-language": {
+        "parent": "dravidian-family",
+        "type": "language"
+    },
+    "slavic-group": {
+        "parent": "balto-slavic-group",
+        "type": "group",
+        "appeared": {
+            "type": "FROM",
+            "step": "MILLENNIUM",
+            "from": 0,
+            "era": "AC"
+        }
+    },
+    "east-slavic-group": {
+        "parent": "slavic-group",
+        "type": "group"
+    },
+    "old-east-slavic-language": {
+        "parent": "east-slavic-group",
+        "type": "language"
+    },
+    "balto-slavic-group": {
+        "parent": "indo-european-group",
+        "type": "group",
+        "appeared": {
+            "type": "FROM",
+            "step": "MILLENNIUM",
+            "from": 1,
+            "era": "BC"
+        }
+    },
+    "russian-language": {
+        "parent": "old-east-slavic-language",
+        "type": "language"
+    },
+    "belarusian-language": {
+        "parent": "old-east-slavic-language",
+        "type": "language"
+    },
+    "ukrainian-language": {
+        "parent": "old-east-slavic-language",
+        "type": "language"
+    },
+    "сeltic-group": {
+        "parent": "indo-european-group",
+        "type": "group",
+        "appeared": {
+            "type": "FROM",
+            "step": "MILLENNIUM",
+            "from": 0,
+            "era": "AC"
+        }
+    },
+    "breton-language": {
+        "parent": "сeltic-group",
+        "type": "language"
+    },
+    "welsh-language": {
+        "parent": "сeltic-group",
+        "type": "language"
+    },
+    "scottish-gaelic-language": {
+        "parent": "сeltic-group",
+        "type": "language"
+    },
+    "irish-language": {
+        "parent": "сeltic-group",
+        "type": "language"
+    },
+    "anatolian-languages": {
+        "parent": "indo-european-group",
+        "type": "group"
+    },
+    "indo-iranian-languages": {
+        "parent": "indo-european-group",
+        "type": "group"
+    },
+    "armenian-language": {
+        "parent": "indo-iranian-languages",
+        "type": "language"
+    },
+    "hellenic-languages": {
+        "parent": "indo-european-group",
+        "type": "group"
+    },
+    "greek-language": {
+        "parent": "hellenic-languages",
+        "type": "language"
+    },
+    "pontic-greek-language": {
+        "parent": "hellenic-languages",
+        "type": "language"
+    },
+    "tocharian-languages": {
+        "parent": "indo-european-group",
+        "type": "group"
+    },
+    "tocharian-a-language": {
+        "parent": "tocharian-languages",
+        "type": "language"
+    },
+    "tocharian-b-language": {
+        "parent": "tocharian-languages",
+        "type": "language"
+    },
+    "paleo-balkan-language": {
+        "parent": "indo-european-group",
+        "type": "group"
+    },
+    "illyrian-language": {
+        "parent": "paleo-balkan-language",
+        "type": "group"
+    },
+    "albanian-language": {
+        "parent": "illyrian-language",
+        "type": "language"
+    },
+    "messapic-language": {
+        "parent": "illyrian-language",
+        "type": "language"
+    },
+    "daco-thracian-languages": {
+        "parent": "paleo-balkan-language",
+        "type": "group"
+    },
+    "daco-language": {
+        "parent": "daco-thracian-languages",
+        "type": "language"
+    },
+    "thracian-language": {
+        "parent": "daco-thracian-languages",
+        "type": "language"
+    },
+    "altaic-family": {
+        "parent": "nostratic-langs-family",
+        "type": "family",
+        "appeared": {
+            "type": "FROM",
+            "step": "MILLENNIUM",
+            "from": 6,
+            "era": "BC"
+        }
+    },
+    "japonic-languages": {
+        "parent": "altaic-family",
+        "type": "family"
+    },
+    "japanese-language": {
+        "parent": "japonic-languages",
+        "type": "language"
+    },
+    "ryukyuan-languages": {
+        "parent": "japonic-languages",
+        "type": "group"
+    },
+    "northern-ryukyuan-languages": {
+        "parent": "ryukyuan-languages",
+        "type": "group"
+    },
+    "amami-language": {
+        "parent": "northern-ryukyuan-languages",
+        "type": "language"
+    },
+    "okinawan-language": {
+        "parent": "northern-ryukyuan-languages",
+        "type": "language"
+    },
+    "southern-ryukyuan-languages": {
+        "parent": "ryukyuan-languages",
+        "type": "group"
+    },
+    "yonaguni-language": {
+        "parent": "southern-ryukyuan-languages",
+        "type": "language"
+    },
+    "sakishima-languages": {
+        "parent": "southern-ryukyuan-languages",
+        "type": "group"
+    },
+    "yaeyama-language": {
+        "parent": "sakishima-languages",
+        "type": "language"
+    },
+    "miyakoan-language": {
+        "parent": "sakishima-languages",
+        "type": "language"
+    },
+    "korean-language": {
+        "parent": "altaic-family",
+        "type": "language"
+    },
+    "tungusic-languages": {
+        "parent": "altaic-family",
+        "type": "group"
+    },
+    "tungusic-northern-siberian-languages": {
+        "parent": "tungusic-languages",
+        "type": "group"
+    },
+    "even-group": {
+        "parent": "tungusic-northern-siberian-languages",
+        "type": "group"
+    },
+    "even-language": {
+        "parent": "even-group",
+        "type": "language"
+    },
+    "evenki-group": {
+        "parent": "tungusic-northern-siberian-languages",
+        "type": "group"
+    },
+    "evenki-language": {
+        "parent": "evenki-group",
+        "type": "language"
+    },
+    "negidal-language": {
+        "parent": "evenki-group",
+        "type": "language"
+    },
+    "tungusic-southeastern-amur_nanian-languages": {
+        "parent": "tungusic-languages",
+        "type": "group"
+    },
+    "nanai-group": {
+        "parent": "tungusic-southeastern-amur_nanian-languages",
+        "type": "group"
+    },
+    "nanai-language": {
+        "parent": "nanai-group",
+        "type": "language"
+    },
+    "ulch-language": {
+        "parent": "nanai-group",
+        "type": "language"
+    },
+    "orok-language": {
+        "parent": "nanai-group",
+        "type": "language"
+    },
+    "udege-group": {
+        "parent": "tungusic-southeastern-amur_nanian-languages",
+        "type": "group"
+    },
+    "udege-language": {
+        "parent": "udege-group",
+        "type": "language"
+    },
+    "oroch-language": {
+        "parent": "udege-group",
+        "type": "language"
+    },
+    "tungusic-southern-manchu-languages": {
+        "parent": "tungusic-languages",
+        "type": "group"
+    },
+    "jurchen-language": {
+        "parent": "tungusic-southern-manchu-languages",
+        "type": "language"
+    },
+    "manchu-language": {
+        "parent": "jurchen-language",
+        "type": "language"
+    },
+    "mongolic-languages": {
+        "parent": "altaic-family",
+        "type": "family"
+    },
+    "turkic-languages": {
+        "parent": "altaic-family",
+        "type": "family"
+    },
+    "proto-turkic-language": {
+        "parent": "turkic-languages",
+        "type": "language"
+    },
+    "oghuric-languages": {
+        "parent": "proto-turkic-language",
+        "type": "group"
+    },
+    "avar-historical-language": {
+        "parent": "oghuric-languages",
+        "type": "language"
+    },
+    "bulgar-language": {
+        "parent": "oghuric-languages",
+        "type": "language"
+    },
+    "hunnic-language": {
+        "parent": "oghuric-languages",
+        "type": "language"
+    },
+    "khazar-language": {
+        "parent": "oghuric-languages",
+        "type": "language"
+    },
+    "common-turkic-languages": {
+        "parent": "proto-turkic-language",
+        "type": "group"
+    },
+    "old-turkic-languages": {
+        "parent": "common-turkic-languages",
+        "type": "group"
+    },
+    "old-kyrgyz-language": {
+        "parent": "old-turkic-languages",
+        "type": "language"
+    },
+    "old-turkic-language": {
+        "parent": "old-turkic-languages",
+        "type": "language"
+    },
+    "uyghur-runic-language": {
+        "parent": "old-turkic-languages",
+        "type": "language"
+    },
+    "altai-languages": {
+        "parent": "common-turkic-languages",
+        "type": "group"
+    },
+    "kyrgyz-kypchak-languages": {
+        "parent": "altai-languages",
+        "type": "group"
+    },
+    "kyrgyz-language": {
+        "parent": "kyrgyz-kypchak-languages",
+        "type": "language"
+    },
+    "fergana-kipchak-language": {
+        "parent": "kyrgyz-kypchak-languages",
+        "type": "language"
+    },
+    "siberian-tatar-language": {
+        "parent": "kyrgyz-kypchak-languages",
+        "type": "language"
+    },
+    "southern-altai-language": {
+        "parent": "kyrgyz-kypchak-languages",
+        "type": "language"
+    },
+    "northern-altaic-languages": {
+        "parent": "altai-languages",
+        "type": "group"
+    },
+    "northern-altai-language": {
+        "parent": "northern-altaic-languages",
+        "type": "language"
+    },
+    "tubalar-language": {
+        "parent": "northern-altaic-languages",
+        "type": "language"
+    },
+    "yakut-languages": {
+        "parent": "common-turkic-languages",
+        "type": "group"
+    },
+    "yakut-language": {
+        "parent": "yakut-languages",
+        "type": "language"
+    },
+    "dolgan-language": {
+        "parent": "yakut-languages",
+        "type": "language"
+    },
+    "karluk-languages": {
+        "parent": "common-turkic-languages",
+        "type": "group"
+    },
+    "kipchak-languages": {
+        "parent": "common-turkic-languages",
+        "type": "group"
+    },
+    "oghuz-languages": {
+        "parent": "common-turkic-languages",
+        "type": "group"
+    },
+    "sayan-languages": {
+        "parent": "common-turkic-languages",
+        "type": "group"
+    },
+    "sayan-steppe-languages": {
+        "parent": "sayan-languages",
+        "type": "group"
+    },
+    "qoqmoncaq-language": {
+        "parent": "sayan-steppe-languages",
+        "type": "language"
+    },
+    "tuvan-language": {
+        "parent": "sayan-steppe-languages",
+        "type": "language"
+    },
+    "tsengel-language": {
+        "parent": "sayan-steppe-languages",
+        "type": "language"
+    },
+    "sayan-taiga-languages": {
+        "parent": "sayan-languages",
+        "type": "group"
+    },
+    "soyot-tsaatan-language": {
+        "parent": "sayan-taiga-languages",
+        "type": "language"
+    },
+    "tofa-language": {
+        "parent": "sayan-taiga-languages",
+        "type": "language"
+    },
+    "khakass-languages": {
+        "parent": "common-turkic-languages",
+        "type": "group"
+    },
+    "western-yugur-language": {
+        "parent": "khakass-languages",
+        "type": "language"
+    },
+    "aynu-language": {
+        "parent": "khakass-languages",
+        "type": "language"
+    },
+    "fuyu-kyrgyz-language": {
+        "parent": "khakass-languages",
+        "type": "language"
+    },
+    "khakass-language": {
+        "parent": "khakass-languages",
+        "type": "language"
+    },
+    "west-slavic-group": {
+        "parent": "slavic-group",
+        "type": "group"
+    },
+    "lechitic-languages": {
+        "parent": "west-slavic-group",
+        "type": "group"
+    },
+    "east-lechitic-languages": {
+        "parent": "lechitic-languages",
+        "type": "group"
+    },
+    "polabian-language": {
+        "parent": "east-lechitic-languages",
+        "type": "language"
+    },
+    "pomeranian-language": {
+        "parent": "east-lechitic-languages",
+        "type": "language"
+    },
+    "kashubian-language": {
+        "parent": "pomeranian-language",
+        "type": "language"
+    },
+    "west-lechitic-languages": {
+        "parent": "lechitic-languages",
+        "type": "group"
+    },
+    "polish-language": {
+        "parent": "west-lechitic-languages",
+        "type": "language"
+    },
+    "sorbian-languages": {
+        "parent": "west-slavic-group",
+        "type": "group"
+    },
+    "upper-sorbian-language": {
+        "parent": "sorbian-languages",
+        "type": "language"
+    },
+    "lower-sorbian-language": {
+        "parent": "sorbian-languages",
+        "type": "language"
+    },
+    "czech–slovak-languages": {
+        "parent": "west-slavic-group",
+        "type": "group"
+    },
+    "slovak-language": {
+        "parent": "czech–slovak-languages",
+        "type": "language"
+    },
+    "czech-language": {
+        "parent": "czech–slovak-languages",
+        "type": "language"
+    },
+    "baltic-group": {
+        "parent": "balto-slavic-group",
+        "type": "group",
+        "appeared": {
+            "type": "FROM",
+            "step": "MILLENNIUM",
+            "from": 1,
+            "era": "BC"
+        }
+    },
+    "west-baltic-group": {
+        "parent": "baltic-group",
+        "type": "group"
+    },
+    "east-baltic-group": {
+        "parent": "baltic-group",
+        "type": "group"
+    },
+    "old-prussian-language": {
+        "parent": "west-baltic-group",
+        "type": "language"
+    },
+    "sudovian-language": {
+        "parent": "west-baltic-group",
+        "type": "language"
+    },
+    "lithuanian-language": {
+        "parent": "east-baltic-group",
+        "type": "language"
+    },
+    "latvian-language": {
+        "parent": "east-baltic-group",
+        "type": "language"
+    }
+}

@@ -1,6 +1,9 @@
+import localizations from './localizations.json';
+import languages from './languages.json';
+
 export type TreeNode = {
   label: { en: string; ru: string };
-  type: 'language' | 'family';
+  type: 'language' | 'family' | 'group';
   appeared?: Appeared;
   children?: Record<string, TreeNode>;
 };
@@ -13,48 +16,55 @@ export interface Appeared {
   era: 'BC' | 'AC';
 }
 
-export const treeData: TreeNode = {
-  type: 'language',
-  label: { en: 'Proto lang', ru: 'Прото язык' },
-  appeared: {
-    type: 'IN',
-    step: 'MILLENNIUM',
-    from: 13,
-    to: 14,
-    era: 'BC'
-  },
-  children: {
-    'nostratic-langs-family': {
-      type: 'family',
-      label: { en: 'Nostratic languages', ru: 'Ностратические языки' },
-      appeared: {
-        type: 'IN',
-        step: 'MILLENNIUM',
-        from: 10,
-        to: 11,
-        era: 'BC'
-      }
+function createNode(id: string): TreeNode {
+  const langData = languages[id as keyof typeof languages];
+  const locData = localizations[id as keyof typeof localizations];
+
+  const node: TreeNode = {
+    label: {
+      en: locData.eng,
+      ru: locData.rus
     },
-    'dene-caucasian-family': {
-      type: 'family',
-      label: { en: 'Dene–Caucasian languages', ru: 'Сино-кавказские языки' },
-      appeared: {
-        type: 'FROM',
-        step: 'MILLENNIUM',
-        from: 9,
-        era: 'BC'
-      }
-    },
-    'afroasiatic-family': {
-      type: 'family',
-      label: { en: 'Afroasiatic languages', ru: 'Афразийские языки' },
-      appeared: {
-        type: 'IN',
-        step: 'MILLENNIUM',
-        from: 10,
-        to: 11,
-        era: 'BC'
-      }
-    }
+    type: langData.type as 'language' | 'family' | 'group',
+  };
+
+  if ('appeared' in langData) {
+    node.appeared = { ...langData.appeared } as Appeared;
   }
+
+  return node;
+}
+
+const childrenMap: Record<string, string[]> = {};
+
+Object.entries(languages).forEach(([id, data]) => {
+  if ('parent' in data) {
+    if (!childrenMap[data.parent]) {
+      childrenMap[data.parent] = [];
+    }
+    childrenMap[data.parent].push(id);
+  }
+});
+
+function buildTree(parentId: string): Record<string, TreeNode> {
+  const children: Record<string, TreeNode> = {};
+  const childIds = childrenMap[parentId] || [];
+
+  for (const childId of childIds) {
+    const node = createNode(childId);
+    const grandchildren = buildTree(childId);
+
+    if (Object.keys(grandchildren).length > 0) {
+      node.children = grandchildren;
+    }
+
+    children[childId] = node;
+  }
+
+  return children;
+}
+
+export const treeData: TreeNode = {
+  ...createNode('proto-language'),
+  children: buildTree('proto-language')
 };

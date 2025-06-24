@@ -1,0 +1,558 @@
+{
+	"web.title": {
+		"eng": "Language history graph",
+		"rus": "Граф истории языков"
+	},
+	"web.body.header": {
+		"eng": "Cytoscape graph of world languages",
+		"rus": "Cytoscape граф языков мира"
+	},
+	"proto-language": {
+        "rus": "Прото язык",
+        "eng": "Proto lang"
+	},
+	"nostratic-langs-family": {
+        "rus": "Ностратические языки",
+        "eng": "Nostratic languages"
+	},
+    "dene–caucasian-family": {
+        "rus": "Сино-кавказские языки",
+        "eng": "Dene–Caucasian languages"
+    },
+    "afroasiatic-family": {
+		"rus": "Афразийские языки",
+		"eng": "Afroasiatic languages"
+    },
+    "indo-european-group": {
+		"rus": "Индоевропейские языки",
+		"eng": "Indo-European languages"
+    },
+	"balto-slavic-group": {
+		"rus": "Балто-славянские языки",
+		"eng": "Balto-Slavic languages"
+    },
+	"slavic-group": {
+		"rus": "Славянские языки",
+		"eng": "Slavic languages"
+    },
+	"east-slavic-group": {
+		"rus": "Восточнославянские языки",
+		"eng": "East Slavic languages"
+    },
+	"old-east-slavic-language": {
+		"rus": "Древнерусский язык",
+		"eng": "Old East Slavic"
+    },
+	"russian-language": {
+		"rus": "Русский язык",
+		"eng": "Russian language"
+    },
+	"belarusian-language": {
+		"rus": "Белорусский язык",
+		"eng": "Belarusian language"
+    },
+	"ukrainian-language": {
+		"rus": "Украинский язык",
+		"eng": "Ukrainian language"
+    },
+	"сeltic-group": {
+		"rus": "Кельтские языки",
+		"eng": "Celtic languages"
+    },
+	"breton-language": {
+		"rus": "Бретонский язык",
+		"eng": "Breton language"
+    },
+	"welsh-language": {
+		"rus": "Валлийский язык",
+		"eng": "Welsh language"
+    },
+	"kartvelian-family": {
+		"rus": "Картвельские языки",
+		"eng": "Kartvelian languages"
+    },
+	"svan-language": {
+		"rus": "Сванский язык",
+		"eng": "Svan language"
+    },
+	"georgian-language": {
+		"rus": "Грузинский язык",
+		"eng": "Georgian language"
+    },
+	"zan-languages": {
+		"rus": "Занские языки",
+		"eng": "Zan languages"
+    },
+	"mingrelian-language": {
+		"rus": "Мегрельский язык",
+		"eng": "Mingrelian language"
+    },
+	"laz-language": {
+		"rus": "Лазский язык",
+		"eng": "Laz language"
+    },
+	"dravidian-family": {
+		"rus": "Дравидийские языки",
+		"eng": "Dravidian languages"
+    },
+	"telugu-language": {
+		"rus": "Телугу",
+		"eng": "Telugu language"
+    },
+	"elamite-language": {
+		"rus": "Эламский язык",
+		"eng": "Elamite language"
+    },
+	"brahui-language": {
+		"rus": "Брауи",
+		"eng": "Brahui language"
+    },
+	"tamil-language": {
+		"rus": "Тамильский язык",
+		"eng": "Tamil language"
+    },
+	"scottish-gaelic-language": {
+		"rus": "Шотландский язык (кельтский)",
+		"eng": "Scottish Gaelic"
+    },
+	"irish-language": {
+		"rus": "Ирландский язык",
+		"eng": "Irish language"
+    },
+	"anatolian-languages": {
+		"rus": "Анатолийские языки",
+		"eng": "Anatolian languages"
+    },
+	"indo-iranian-languages": {
+		"rus": "Индоиранские языки",
+		"eng": "Indo Iranian languages"
+    },
+	"armenian-language": {
+		"rus": "Армянский язык",
+		"eng": "Armenian language"
+    },
+	"hellenic-languages": {
+		"rus": "Греческая группа языков",
+		"eng": "Hellenic languages"
+    },
+	"greek-language": {
+		"rus": "Греческий язык",
+		"eng": "Greek languages"
+    },
+	"pontic-greek-language": {
+		"rus": "Понтийский язык",
+		"eng": "Pontic Greek"
+    },
+	"tocharian-languages": {
+		"rus": "Тохарские языки",
+		"eng": "Tocharian languages"
+    },
+	"tocharian-a-language": {
+		"rus": "Тохарский язык А",
+		"eng": "Tocharian A"
+    },
+	"tocharian-b-language": {
+		"rus": "Тохарский язык Б",
+		"eng": "Tocharian B"
+    },
+	"paleo-balkan-language": {
+		"rus": "Палеобалканские языки",
+		"eng": "Paleo-Balkan languages"
+    },
+	"illyrian-language": {
+		"rus": "Иллирийские языки",
+		"eng": "Illyrian language"
+    },
+	"daco-thracian-languages": {
+		"rus": "Дакийские языки",
+		"eng": "Daco-Thracian"
+    },
+	"daco-language": {
+		"rus": "Дакский язык",
+		"eng": "Dacian language"
+    },
+	"thracian-language": {
+		"rus": "Фракийский язык",
+		"eng": "Thracian language"
+    },
+	"albanian-language": {
+		"rus": "Албанский язык",
+		"eng": "Albanian language"
+    },
+	"messapic-language": {
+		"rus": "Мессапский язык",
+		"eng": "Messapic language"
+    },
+	"altaic-family": {
+		"rus": "Алтайские языки",
+		"eng": "Altaic languages"
+    },
+	"japonic-languages": {
+		"rus": "Японо-рюкюские языки",
+		"eng": "Japonic languages"
+    },
+	"japanese-language": {
+		"rus": "Японский язык",
+		"eng": "Japanese language"
+    },
+	"ryukyuan-languages": {
+		"rus": "Рюкюские языки",
+		"eng": "Ryukyuan languages"
+    },
+	"northern-ryukyuan-languages": {
+		"rus": "Севернорюкюские языки",
+		"eng": "Northern ryukyuan languages"
+    },
+	"amami-language": {
+		"rus": "Амамийский язык",
+		"eng": "Amami language"
+    },
+	"okinawan-language": {
+		"rus": "Окинавский язык",
+		"eng": "Okinawan language"
+    },
+	"southern-ryukyuan-languages": {
+		"rus": "Южнорюкюские языки",
+		"eng": "Southern ryukyuan languages"
+    },
+	"yonaguni-language": {
+		"rus": "Йонагунский язык",
+		"eng": "Yonaguni language"
+    },
+	"sakishima-languages": {
+		"rus": "Сакисимские языки",
+		"eng": "Sakishima languages"
+    },
+	"yaeyama-language": {
+		"rus": "Яэямское наречие",
+		"eng": "Yaeyama language"
+    },
+	"miyakoan-language": {
+		"rus": "Миякоское наречие",
+		"eng": "Miyakoan language"
+    },
+	"tungusic-languages": {
+		"rus": "Тунгусо-маньчжурские языки",
+		"eng": "Tungusic languages"
+    },
+	"tungusic-northern-siberian-languages": {
+		"rus": "Северная (сибирская) ветвь",
+		"eng": "Northern (Siberian) branch"
+    },
+	"even-group": {
+		"rus": "Эвенская группа",
+		"eng": "Even group"
+    },
+	"even-language": {
+		"rus": "Эвенский язык",
+		"eng": "Even language"
+    },
+	"evenki-group": {
+		"rus": "Эвенкийская группа",
+		"eng": "Evenki group"
+    },
+	"evenki-language": {
+		"rus": "Эвенкийский язык",
+		"eng": "Evenki language"
+    },
+	"negidal-language": {
+		"rus": "Негидальский язык",
+		"eng": "Negidal language"
+    },
+	"tungusic-southeastern-amur_nanian-languages": {
+		"rus": "Юго-восточная (амурская, нанийская) ветвь",
+		"eng": "Southeastern (Amur, Nanian) branch"
+	},
+	"nanai-group": {
+		"rus": "Нанайская группа",
+		"eng": "Nanai group"
+	},
+	"nanai-language": {
+		"rus": "Нанайский язык",
+		"eng": "Nanai language"
+	},
+	"ulch-language": {
+		"rus": "Ульчский язык",
+		"eng": "Ulch language"
+	},
+	"orok-language": {
+		"rus": "Орокский язык",
+		"eng": "Orok language"
+	},
+	"udege-group": {
+		"rus": "Удэгейская группа",
+		"eng": "Udege group"
+	},
+	"udege-language": {
+		"rus": "Удэгейский язык",
+		"eng": "Udege language"
+	},
+	"oroch-language": {
+		"rus": "Орочский язык",
+		"eng": "Oroch language"
+	},
+	"tungusic-southern-manchu-languages": {
+		"rus": "Южная (маньчжурская) ветвь",
+		"eng": "Southern (Manchu) branch"
+	},
+	"jurchen-language": {
+		"rus": "Чжурчжэньский язык",
+		"eng": "Jurchen language"
+	},
+	"manchu-language": {
+		"rus": "Маньчжурский язык",
+		"eng": "Manchu language"
+	},
+	"mongolic-languages": {
+		"rus": "Монгольские языки",
+		"eng": "Mongolic languages"
+	},
+	"turkic-languages": {
+		"rus": "Тюркские языки",
+		"eng": "Turkic languages"
+	},
+	"proto-turkic-language": {
+		"rus": "Пратюркский язык",
+		"eng": "Proto-Turkic language"
+	},
+	"oghuric-languages": {
+		"rus": "Булгарские языки",
+		"eng": "Oghuric languages"
+	},
+	"avar-historical-language": {
+		"rus": "Аварский язык (исторический)",
+		"eng": "Avar language (historical)"
+	},
+	"bulgar-language": {
+		"rus": "Булгарский язык",
+		"eng": "Bulgar language"
+	},
+	"hunnic-language": {
+		"rus": "Гуннский язык",
+		"eng": "Hunnic language"
+	},
+	"khazar-language": {
+		"rus": "Хазарский язык",
+		"eng": "Khazar language"
+	},
+	"common-turkic-languages": {
+		"rus": "Собственно тюркские языки",
+		"eng": "Common Turkic languages"
+	},
+	"old-turkic-languages": {
+		"rus": "Древнетюркские языки",
+		"eng": "Old Turkic languages"
+	},
+	"old-kyrgyz-language": {
+		"rus": "Древнекыргызский язык",
+		"eng": "Old Kyrgyz language"
+	},
+	"old-turkic-language": {
+		"rus": "Орхоно-енисейский язык",
+		"eng": "Old Turkic"
+	},
+	"uyghur-runic-language": {
+		"rus": "Уйгурский рунический язык",
+		"eng": "Uyghur runic language"
+	},
+	"altai-languages": {
+		"rus": "Горно-алтайские языки",
+		"eng": "Altai languages"
+	},
+	"kyrgyz-kypchak-languages": {
+		"rus": "Киргизско-кыпчакские языки",
+		"eng": "Kyrgyz-Kypchak languages"
+	},
+	"kyrgyz-language": {
+		"rus": "Киргизский язык",
+		"eng": "Kyrgyz language"
+	},
+	"fergana-kipchak-language": {
+		"rus": "Ферганско-кыпчакский язык",
+		"eng": "Fergana Kipchak language"
+	},
+	"siberian-tatar-language": {
+		"rus": "Сибирско-татарский язык",
+		"eng": "Siberian Tatar language"
+	},
+	"southern-altai-language": {
+		"rus": "Алтайский язык",
+		"eng": "Southern Altai language"
+	},
+	"northern-altaic-languages": {
+		"rus": "Северноалтайские языки",
+		"eng": "Northern Altaic languages"
+	},
+	"northern-altai-language": {
+		"rus": "Северноалтайский язык",
+		"eng": "Northern Altai language"
+	},
+	"tubalar-language": {
+		"rus": "Тубаларский язык",
+		"eng": "Tubalar language"
+	},
+	"yakut-languages": {
+		"rus": "Якутские языки",
+		"eng": "Yakut languages"
+	},
+	"yakut-language": {
+		"rus": "Якутский язык",
+		"eng": "Yakut language"
+	},
+	"dolgan-language": {
+		"rus": "Долганский язык",
+		"eng": "Dolgan language"
+	},
+	"karluk-languages": {
+		"rus": "Карлукские языки",
+		"eng": "Karluk languages"
+	},
+	"kipchak-languages": {
+		"rus": "Кыпчакские языки",
+		"eng": "Kipchak languages"
+	},
+	"oghuz-languages": {
+		"rus": "Огузские языки",
+		"eng": "Oghuz languages"
+	},
+	"sayan-languages": {
+		"rus": "Саянские языки",
+		"eng": "Sayan languages"
+	},
+	"khakass-languages": {
+		"rus": "Хакасские языки",
+		"eng": "Khakass languages"
+	},
+	"sayan-steppe-languages": {
+		"rus": "Степные языки",
+		"eng": "Steppe languages"
+	},
+	"qoqmoncaq-language": {
+		"rus": "Кёк-мончакский язык",
+		"eng": "Qoqmončaq language"
+	},
+	"tuvan-language": {
+		"rus": "Тувинский язык",
+		"eng": "Tuvan language"
+	},
+	"tsengel-language": {
+		"rus": "Цэнгэльский язык",
+		"eng": "Tsengel language"
+	},
+	"sayan-taiga-languages": {
+		"rus": "Таёжные языки",
+		"eng": "Taiga languages"
+	},
+	"soyot-tsaatan-language": {
+		"rus": "Сойотско-цаатанский язык",
+		"eng": "Soyot-Tsaatan language"
+	},
+	"tofa-language": {
+		"rus": "Тофаларский язык",
+		"eng": "Tofa language"
+	},
+	"western-yugur-language": {
+		"rus": "Сарыг-югурский язык",
+		"eng": "Western Yugur language"
+	},
+	"aynu-language": {
+		"rus": "Айнийский язык",
+		"eng": "Äynu language"
+	},
+	"fuyu-kyrgyz-language": {
+		"rus": "Фуюйско-кыргызский язык",
+		"eng": "Fuyu Kyrgyz"
+	},
+	"khakass-language": {
+		"rus": "Хакасский язык",
+		"eng": "Khakass language"
+	},
+	"korean-language": {
+		"rus": "Корейский язык",
+		"eng": "Korean language"
+    },
+	"west-slavic-group": {
+		"rus": "Западнославянские языки",
+		"eng": "West Slavic languages"
+	},
+	"lechitic-languages": {
+		"rus": "Лехитские языки",
+		"eng": "Lechitic languages"
+	},
+	"east-lechitic-languages": {
+		"rus": "Восточнолехитские языки",
+		"eng": "East Lechitic languages"
+	},
+	"polabian-language": {
+		"rus": "Полабский языки",
+		"eng": "Polabian language"
+	},
+	"pomeranian-language": {
+		"rus": "Поморский язык",
+		"eng": "Pomeranian language"
+	},
+	"kashubian-language": {
+		"rus": "Кашубский язык",
+		"eng": "Kashubian language"
+	},
+	"west-lechitic-languages": {
+		"rus": "Западнолехитские языки",
+		"eng": "West Lechitic languages"
+	},
+	"polish-language": {
+		"rus": "Польский язык",
+		"eng": "Polish language"
+	},
+	"sorbian-languages": {
+		"rus": "Лужицкие языки",
+		"eng": "Sorbian languages"
+	},
+	"upper-sorbian-language": {
+		"rus": "Верхнелужицкий языки",
+		"eng": "Upper Sorbian languages"
+	},
+	"lower-sorbian-language": {
+		"rus": "Нижнелужицкий языки",
+		"eng": "Lower Sorbian languages"
+	},
+	"czech–slovak-languages": {
+		"rus": "Чешско-словацкие языки",
+		"eng": "Czech–Slovak languages"
+	},
+	"slovak-language": {
+		"rus": "Словацкий язык",
+		"eng": "Slovak language"
+	},
+	"czech-language": {
+		"rus": "Чешский язык",
+		"eng": "Czech language"
+	},
+	"baltic-group": {
+		"rus": "Балтийские языки",
+		"eng": "Baltic languages"
+	},
+	"west-baltic-group": {
+		"rus": "Западнобалтийская группа",
+		"eng": "West Baltic languages"
+	},
+	"east-baltic-group": {
+		"rus": "Восточнобалтийская группа",
+		"eng": "East Baltic languages"
+	},
+	"old-prussian-language": {
+		"rus": "Прусский язык",
+		"eng": "Old Prussian language"
+	},
+	"sudovian-language": {
+		"rus": "Ятвяжский язык",
+		"eng": "Sudovian language"
+	},
+	"lithuanian-language": {
+		"rus": "Литовский язык",
+		"eng": "Lithuanian language"
+	},
+	"latvian-language": {
+		"rus": "Латышский язык",
+		"eng": "Latvian language"
+	}
+}
