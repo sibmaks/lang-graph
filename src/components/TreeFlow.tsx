@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactFlow, {
   applyEdgeChanges,
   applyNodeChanges,
@@ -21,12 +21,16 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import { MaterialSymbolsKeyboardArrowDownRounded, MaterialSymbolsKeyboardArrowUpRounded } from '../icons';
 
 type ExpandedMap = Record<string, boolean>;
+type NodePosition = { x: number; y: number };
+type PositionMap = Record<string, NodePosition>;
 
 const TreeFlow = () => {
   const [expanded, setExpanded] = useState<ExpandedMap>({ root: true });
   const [lang, setLang] = useState<Language>(getLang());
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
+  const nodePositionsRef = useRef<PositionMap>({});
+  const initialPositionsCalculated = useRef(false);
 
   const handleExpand = useCallback((e: CustomEvent<string>) => {
     const id = e.detail;
@@ -80,14 +84,21 @@ const TreeFlow = () => {
       </Container>
     );
 
+    const savedPosition = nodePositionsRef.current[node.id];
+    const position = savedPosition || { x: xOffset, y: level * 120 };
+
     const currentNode: Node = {
       id: node.id,
       data: { label },
-      position: { x: xOffset, y: level * 120 },
+      position,
       type: parentId === null ? 'input' : (hasChildren ? undefined : 'output'),
     };
 
     nodes.push(currentNode);
+
+    if (!savedPosition) {
+      nodePositionsRef.current[node.id] = position;
+    }
 
     if (parentId) {
       edges.push({
@@ -98,12 +109,17 @@ const TreeFlow = () => {
     }
 
     if (expanded[node.id] && hasChildren) {
+      const childrenCount = node.children!.length;
+      const totalWidth = childrenCount * 200;
+      const startX = xOffset - totalWidth / 2 + 100;
+
       node.children!.forEach((child, index) => {
+        const childX = startX + index * 200;
         const childElements = generateElements(
           child,
           node.id,
           level + 1,
-          xOffset + index * 200
+          childX
         );
         nodes.push(...childElements.nodes);
         edges.push(...childElements.edges);
@@ -114,7 +130,18 @@ const TreeFlow = () => {
   }, [expanded, lang]);
 
   const onNodesChange: OnNodesChange = (changes) => {
-    setNodes((nds) => applyNodeChanges(changes, nds));
+    setNodes((nds) => {
+      const updatedNodes = applyNodeChanges(changes, nds);
+
+      changes.forEach(change => {
+        if (change.type === 'position' && change.dragging && change.position) {
+          const nodeId = change.id;
+          nodePositionsRef.current[nodeId] = change.position;
+        }
+      });
+
+      return updatedNodes;
+    });
   };
 
   const onEdgesChange: OnEdgesChange = (changes) => {
@@ -122,10 +149,26 @@ const TreeFlow = () => {
   };
 
   useEffect(() => {
-    const elements = generateElements(treeData);
+    if (!initialPositionsCalculated.current) {
+      const elements = generateElements(treeData);
+      setNodes(elements.nodes);
+      setEdges(elements.edges);
+      initialPositionsCalculated.current = true;
+    } else {
+      setNodes(prevNodes => {
+        const existingNodesMap = new Map(prevNodes.map(node => [node.id, node]));
+        const newElements = generateElements(treeData);
 
-    setNodes(elements.nodes);
-    setEdges(elements.edges);
+        return newElements.nodes.map(newNode => {
+          const existingNode = existingNodesMap.get(newNode.id);
+          return existingNode
+            ? { ...existingNode, data: newNode.data }
+            : newNode;
+        });
+      });
+
+      setEdges(generateElements(treeData).edges);
+    }
   }, [generateElements]);
 
   return (
