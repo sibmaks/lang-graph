@@ -49,7 +49,7 @@ const TreeFlow = () => {
     langRef.current = lang;
   }, [lang]);
 
-  const generateLabel = useCallback((id: string, node: TreeNode): React.ReactNode => {
+  const generateLabel = useCallback((nodeId: string, node: TreeNode): React.ReactNode => {
     const hasChildren = node.children && Object.keys(node.children).length > 0;
     return (
       <Container fluid={true}>
@@ -65,11 +65,11 @@ const TreeFlow = () => {
                 onClick={(e) => {
                   e.stopPropagation();
                   window.dispatchEvent(
-                    new CustomEvent('expand-node', { detail: id })
+                    new CustomEvent('expand-node', { detail: nodeId })
                   );
                 }}
               >
-                {expanded[id] ? <MaterialSymbolsKeyboardArrowDownRounded width={16} height={16} /> :
+                {expanded[nodeId] ? <MaterialSymbolsKeyboardArrowDownRounded width={16} height={16} /> :
                   <MaterialSymbolsKeyboardArrowUpRounded width={16} height={16} />}
               </Button>
             </Col>
@@ -95,7 +95,7 @@ const TreeFlow = () => {
   }, [handleExpand]);
 
   const generateElements = useCallback((
-    id: string,
+    nodeId: string,
     node: TreeNode,
     parentId: string | null = null,
     level = 0,
@@ -105,13 +105,13 @@ const TreeFlow = () => {
     const edges: Edge[] = [];
     const hasChildren = node.children && Object.keys(node.children).length > 0;
 
-    const savedPosition = nodePositionsRef.current[id];
+    const savedPosition = nodePositionsRef.current[nodeId];
     const position = savedPosition || { x: xOffset, y: level * 120 };
 
     const currentNode: Node = {
-      id: id,
+      id: nodeId,
       data: {
-        label: generateLabel(id, node)
+        label: generateLabel(nodeId, node)
       },
       position,
       type: parentId === null ? 'input' : (hasChildren ? undefined : 'output'),
@@ -120,18 +120,18 @@ const TreeFlow = () => {
     nodes.push(currentNode);
 
     if (!savedPosition) {
-      nodePositionsRef.current[id] = position;
+      nodePositionsRef.current[nodeId] = position;
     }
 
     if (parentId) {
       edges.push({
-        id: `${parentId}-${id}`,
+        id: `${parentId}-${nodeId}`,
         source: parentId,
-        target: id,
+        target: nodeId,
       });
     }
 
-    if (expanded[id] && hasChildren) {
+    if (expanded[nodeId] && hasChildren) {
       const children = node.children ?? {};
       const childrenCount = Object.keys(children).length;
       const totalWidth = childrenCount * 200;
@@ -142,7 +142,7 @@ const TreeFlow = () => {
         const childElements = generateElements(
           childId,
           child,
-          id,
+          nodeId,
           level + 1,
           childX
         );
