@@ -54,6 +54,7 @@ const TreeFlow = () => {
   const nodePositionsRef = useRef<PositionMap>({});
   const initialPositionsCalculated = useRef(false);
   const langRef = useRef(lang);
+  const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
   useEffect(() => {
     langRef.current = lang;
@@ -70,7 +71,7 @@ const TreeFlow = () => {
       }
     };
 
-    collectLangs(rootNodeId, treeData)
+    collectLangs(rootNodeId, treeData);
     setSearchLanguages(languages);
   }, [lang]);
 
@@ -246,6 +247,19 @@ const TreeFlow = () => {
     );
   }, [lang, generateLabel]);
 
+  const findPathToNode = (currentId: string, node: TreeNode, targetId: string): string[] | null => {
+    if (currentId === targetId) return [currentId];
+
+    for (const [childId, child] of Object.entries(node.children ?? {})) {
+      const childPath = findPathToNode(childId, child, targetId);
+      if (childPath) {
+        return [currentId, ...childPath];
+      }
+    }
+
+    return null;
+  };
+
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative' }}>
       <ReactFlow
@@ -261,15 +275,31 @@ const TreeFlow = () => {
         <Controls />
         <MiniMap />
         <Panel position={'top-left'}>
-          <ButtonGroup>
-            <SuggestiveInput
-              suggestions={searchLanguages}
-              maxSuggestions={5}
-              mode="strict"
-              onChange={it => console.log(it)}
-              required={true}
-            />
-            <Button variant={'primary'} size={'sm'}>
+          <ButtonGroup><SuggestiveInput
+            suggestions={searchLanguages}
+            maxSuggestions={5}
+            mode="strict"
+            onChange={it => setSelectedKey(it.key!)}
+            required={true}
+          />
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => {
+                if (!selectedKey) {
+                  return;
+                }
+                const path = findPathToNode(rootNodeId, treeData, selectedKey)?.slice(0, -1);
+                if (!path) {
+                  return;
+                }
+                const expandedUpdate: ExpandedMap = {};
+                for (const id of path) {
+                  expandedUpdate[id] = true;
+                }
+                setExpanded(prev => ({ ...prev, ...expandedUpdate }));
+              }}
+            >
               <MaterialSymbolsSearchRounded />
             </Button>
           </ButtonGroup>
