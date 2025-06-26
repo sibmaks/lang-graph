@@ -52,16 +52,20 @@ const TreeFlow = () => {
   const generateLabel = useCallback((nodeId: string, node: TreeNode): React.ReactNode => {
     const hasChildren = node.children && Object.keys(node.children).length > 0;
     return (
-      <Container fluid={true}>
-        <Row>
-          <Col xs={hasChildren ? 8 : 12} className={'m-auto'}>
+      <Container fluid className="p-0" style={{ width: '100%' }}>
+        <Row className="d-flex align-items-center flex-wrap" style={{ margin: 0 }}>
+          <Col xs={hasChildren ? 8 : 12} className="p-0" style={{
+            wordBreak: 'break-word'
+          }}>
             {node.label[langRef.current]}
           </Col>
           {hasChildren && (
-            <Col xs={4}>
+            <Col xs={4} className="p-0" style={{ flexShrink: 0 }}>
               <Button
                 variant="outline-secondary"
                 size="sm"
+                className="ms-1"
+                style={{ minWidth: '32px' }}
                 onClick={(e) => {
                   e.stopPropagation();
                   window.dispatchEvent(
@@ -69,8 +73,10 @@ const TreeFlow = () => {
                   );
                 }}
               >
-                {expanded[nodeId] ? <MaterialSymbolsKeyboardArrowDownRounded width={16} height={16} /> :
-                  <MaterialSymbolsKeyboardArrowUpRounded width={16} height={16} />}
+                {expanded[nodeId] ?
+                  <MaterialSymbolsKeyboardArrowDownRounded width={16} height={16} /> :
+                  <MaterialSymbolsKeyboardArrowUpRounded width={16} height={16} />
+                }
               </Button>
             </Col>
           )}
