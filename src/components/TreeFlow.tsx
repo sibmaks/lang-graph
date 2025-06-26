@@ -13,7 +13,7 @@ import ReactFlow, {
   Panel
 } from 'reactflow';
 
-import { rootNodeId, treeData, TreeNode } from '../data/treeData';
+import { treeData, TreeNode } from '../data/treeData';
 import { getLang, Language } from '../i18n';
 import LanguageSwitcher from './LanguageSwitcher';
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
@@ -61,17 +61,17 @@ const TreeFlow = () => {
 
     const languages: { key: string, value: string }[] = [];
 
-    const collectLangs = (nodeId: string, node: TreeNode) => {
+    const collectLangs = (node: TreeNode) => {
       languages.push({
-        key: nodeId,
+        key: node.id,
         value: node.label[lang]
       });
-      for (let [childId, child] of Object.entries(node.children ?? {})) {
-        collectLangs(childId, child);
+      for (let child of Object.values(node.children ?? {})) {
+        collectLangs(child);
       }
     };
 
-    collectLangs(rootNodeId, treeData);
+    collectLangs(treeData);
     setSearchLanguages(languages);
   }, [lang]);
 
