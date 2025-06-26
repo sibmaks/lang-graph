@@ -12,13 +12,17 @@ import ReactFlow, {
   OnNodesChange,
   Panel
 } from 'reactflow';
-import 'reactflow/dist/style.css';
 
 import { rootNodeId, treeData, TreeNode } from '../data/treeData';
 import { getLang, Language } from '../i18n';
 import LanguageSwitcher from './LanguageSwitcher';
-import { Button, Col, Container, Row } from 'react-bootstrap';
-import { MaterialSymbolsKeyboardArrowDownRounded, MaterialSymbolsKeyboardArrowUpRounded } from '../icons';
+import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
+import {
+  MaterialSymbolsKeyboardArrowDownRounded,
+  MaterialSymbolsKeyboardArrowUpRounded,
+  MaterialSymbolsSearchRounded
+} from '../icons';
+import { SuggestiveInput } from '@sibdevtools/frontend-common';
 
 type ExpandedMap = Record<string, boolean>;
 type NodePosition = { x: number; y: number };
@@ -36,17 +40,38 @@ const findTreeNode = (nodeId: string, node: TreeNode, id: string): TreeNode | nu
   return null;
 };
 
+interface NodeData {
+  caption: { en: string; ru: string },
+  label: string;
+}
+
 const TreeFlow = () => {
   const [expanded, setExpanded] = useState<ExpandedMap>({ root: true });
   const [lang, setLang] = useState<Language>(getLang());
-  const [nodes, setNodes] = useState<Node[]>([]);
+  const [nodes, setNodes] = useState<Node<NodeData>[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
+  const [searchLanguages, setSearchLanguages] = useState<{ key: string, value: string }[]>([]);
   const nodePositionsRef = useRef<PositionMap>({});
   const initialPositionsCalculated = useRef(false);
   const langRef = useRef(lang);
 
   useEffect(() => {
     langRef.current = lang;
+
+    const languages: { key: string, value: string }[] = [];
+
+    const collectLangs = (nodeId: string, node: TreeNode) => {
+      languages.push({
+        key: nodeId,
+        value: node.label[lang]
+      });
+      for (let [childId, child] of Object.entries(node.children ?? {})) {
+        collectLangs(childId, child);
+      }
+    };
+
+    collectLangs(rootNodeId, treeData)
+    setSearchLanguages(languages);
   }, [lang]);
 
   const generateLabel = useCallback((nodeId: string, node: TreeNode): React.ReactNode => {
@@ -117,6 +142,7 @@ const TreeFlow = () => {
     const currentNode: Node = {
       id: nodeId,
       data: {
+        caption: node.label,
         label: generateLabel(nodeId, node)
       },
       position,
@@ -212,9 +238,10 @@ const TreeFlow = () => {
           ...node,
           data: {
             ...node.data,
+            caption: treeNode.label,
             label: generateLabel(node.id, treeNode)
           }
-        };
+        } as Node<NodeData>;
       })
     );
   }, [lang, generateLabel]);
@@ -233,6 +260,20 @@ const TreeFlow = () => {
         <Background variant={BackgroundVariant.Lines} />
         <Controls />
         <MiniMap />
+        <Panel position={'top-left'}>
+          <ButtonGroup>
+            <SuggestiveInput
+              suggestions={searchLanguages}
+              maxSuggestions={5}
+              mode="strict"
+              onChange={it => console.log(it)}
+              required={true}
+            />
+            <Button variant={'primary'} size={'sm'}>
+              <MaterialSymbolsSearchRounded />
+            </Button>
+          </ButtonGroup>
+        </Panel>
         <Panel position={'top-right'}>
           <LanguageSwitcher onChange={setLang} />
         </Panel>
