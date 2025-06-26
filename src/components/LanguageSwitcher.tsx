@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { getLang, Language, setLang } from '../i18n';
 import { Dropdown } from 'react-bootstrap';
+import { CircleFlagsRu, CircleFlagsUsUm } from '../icons';
 
 interface Flag {
-  icon: string;
+  icon: React.ReactNode;
   label: string;
 }
 
 const FLAGS: Record<Language, Flag> = {
   en: {
-    icon: '🇺🇸',
+    icon: <CircleFlagsUsUm />,
     label: 'English'
   },
   ru: {
-    icon: '🇷🇺',
+    icon: <CircleFlagsRu />,
     label: 'Русский'
   },
 };
