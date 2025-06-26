@@ -28,12 +28,12 @@ type ExpandedMap = Record<string, boolean>;
 type NodePosition = { x: number; y: number };
 type PositionMap = Record<string, NodePosition>;
 
-const findTreeNode = (nodeId: string, node: TreeNode, id: string): TreeNode | null => {
-  if (nodeId === id) return node;
+const findTreeNode = (node: TreeNode, id: string): TreeNode | null => {
+  if (node.id === id) return node;
   if (node.children) {
     for (const childId in node.children) {
       const child = node.children[childId];
-      const found = findTreeNode(childId, child, id);
+      const found = findTreeNode(child, id);
       if (found) return found;
     }
   }
@@ -126,78 +126,99 @@ const TreeFlow = () => {
     };
   }, [handleExpand]);
 
+  // === WIDTH CALCULATION ===
+  const subtreeWidth = useCallback((node: TreeNode): number => {
+    if (!expanded[node.id] || !node.children || Object.keys(node.children).length === 0) {
+      return 1;
+    }
+    return Object.values(node.children).reduce(
+      (acc, child) => acc + subtreeWidth(child),
+      0
+    );
+  }, [expanded]);
+
+  // === POSITION + ELEMENT GENERATION ===
   const generateElements = useCallback((
-    nodeId: string,
     node: TreeNode,
     parentId: string | null = null,
     level = 0,
-    xOffset = 0
-  ): { nodes: Node[]; edges: Edge[] } => {
+    xStart = 0
+  ): { nodes: Node[]; edges: Edge[]; width: number } => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
-    const hasChildren = node.children && Object.keys(node.children).length > 0;
 
-    const savedPosition = nodePositionsRef.current[nodeId];
-    const position = savedPosition || { x: xOffset, y: level * 120 };
+    const nodeWidth = 200;
+    const nodeHeight = 120;
+
+    const children = node.children ?? {};
+    const hasChildren = expanded[node.id] && Object.keys(children).length > 0;
+
+    let currentSubtreeWidth = 1;
+
+    if (hasChildren) {
+      currentSubtreeWidth = Object.values(children)
+        .map(child => subtreeWidth(child))
+        .reduce((a, b) => a + b, 0);
+    }
+
+    const totalWidthPx = currentSubtreeWidth * nodeWidth;
+    const nodeX = xStart + totalWidthPx / 2 - nodeWidth / 2;
+    const nodeY = level * nodeHeight;
+
+    nodePositionsRef.current[node.id] = { x: nodeX, y: nodeY };
 
     const currentNode: Node = {
-      id: nodeId,
+      id: node.id,
       data: {
         caption: node.label,
-        label: generateLabel(nodeId, node)
+        label: generateLabel(node.id, node)
       },
-      position,
+      position: { x: nodeX, y: nodeY },
       type: parentId === null ? 'input' : (hasChildren ? undefined : 'output'),
     };
 
     nodes.push(currentNode);
 
-    if (!savedPosition) {
-      nodePositionsRef.current[nodeId] = position;
-    }
-
     if (parentId) {
       edges.push({
-        id: `${parentId}-${nodeId}`,
+        id: `${parentId}-${node.id}`,
         source: parentId,
-        target: nodeId,
+        target: node.id,
       });
     }
 
-    if (expanded[nodeId] && hasChildren) {
-      const children = node.children ?? {};
-      const childrenCount = Object.keys(children).length;
-      const totalWidth = childrenCount * 200;
-      const startX = xOffset - totalWidth / 2 + 100;
+    if (hasChildren) {
+      let childXStart = xStart;
+      for (const child of Object.values(children)) {
+        const childSubtreeWidth = subtreeWidth(child);
+        const childWidthPx = childSubtreeWidth * nodeWidth;
 
-      Object.entries(children).forEach(([childId, child], index) => {
-        const childX = startX + index * 200;
         const childElements = generateElements(
-          childId,
           child,
-          nodeId,
+          node.id,
           level + 1,
-          childX
+          childXStart
         );
+
         nodes.push(...childElements.nodes);
         edges.push(...childElements.edges);
-      });
+
+        childXStart += childWidthPx;
+      }
     }
 
-    return { nodes, edges };
-  }, [expanded, generateLabel]);
+    return { nodes, edges, width: currentSubtreeWidth };
+  }, [expanded, generateLabel, subtreeWidth]);
 
   const onNodesChange: OnNodesChange = (changes) => {
     setNodes((nds) => {
       const updatedNodes = applyNodeChanges(changes, nds);
-
       changes.forEach(change => {
         if (change.type === 'position' && change.dragging && change.position) {
           const nodeId = change.id;
           nodePositionsRef.current[nodeId] = change.position;
         }
       });
-
       return updatedNodes;
     });
   };
@@ -207,32 +228,17 @@ const TreeFlow = () => {
   };
 
   useEffect(() => {
-    const elements = generateElements(rootNodeId, treeData);
-    setEdges(elements.edges);
-
-    if (!initialPositionsCalculated.current) {
-      setNodes(elements.nodes);
-      initialPositionsCalculated.current = true;
-    } else {
-      setNodes(prevNodes => {
-        const existingNodesMap = new Map(prevNodes.map(node => [node.id, node]));
-
-        return elements.nodes.map(newNode => {
-          const existingNode = existingNodesMap.get(newNode.id);
-          return existingNode
-            ? { ...existingNode, data: newNode.data }
-            : newNode;
-        });
-      });
-    }
+    const { nodes: newNodes, edges: newEdges } = generateElements(treeData);
+    setEdges(newEdges);
+    setNodes(newNodes);
+    initialPositionsCalculated.current = true;
   }, [generateElements]);
 
   useEffect(() => {
     if (!initialPositionsCalculated.current) return;
-
     setNodes(prevNodes =>
       prevNodes.map(node => {
-        const treeNode = findTreeNode(rootNodeId, treeData, node.id);
+        const treeNode = findTreeNode(treeData, node.id);
         if (!treeNode) return node;
 
         return {
@@ -247,13 +253,13 @@ const TreeFlow = () => {
     );
   }, [lang, generateLabel]);
 
-  const findPathToNode = (currentId: string, node: TreeNode, targetId: string): string[] | null => {
-    if (currentId === targetId) return [currentId];
+  const findPathToNode = (node: TreeNode, targetId: string): string[] | null => {
+    if (node.id === targetId) return [node.id];
 
-    for (const [childId, child] of Object.entries(node.children ?? {})) {
-      const childPath = findPathToNode(childId, child, targetId);
+    for (const child of Object.values(node.children ?? {})) {
+      const childPath = findPathToNode(child, targetId);
       if (childPath) {
-        return [currentId, ...childPath];
+        return [node.id, ...childPath];
       }
     }
 
@@ -275,24 +281,21 @@ const TreeFlow = () => {
         <Controls />
         <MiniMap />
         <Panel position={'top-left'}>
-          <ButtonGroup><SuggestiveInput
-            suggestions={searchLanguages}
-            maxSuggestions={5}
-            mode="strict"
-            onChange={it => setSelectedKey(it.key!)}
-            required={true}
-          />
+          <ButtonGroup>
+            <SuggestiveInput
+              suggestions={searchLanguages}
+              maxSuggestions={5}
+              mode="strict"
+              onChange={it => setSelectedKey(it.key!)}
+              required={true}
+            />
             <Button
               variant="primary"
               size="sm"
               onClick={() => {
-                if (!selectedKey) {
-                  return;
-                }
-                const path = findPathToNode(rootNodeId, treeData, selectedKey)?.slice(0, -1);
-                if (!path) {
-                  return;
-                }
+                if (!selectedKey) return;
+                const path = findPathToNode(treeData, selectedKey)?.slice(0, -1);
+                if (!path) return;
                 const expandedUpdate: ExpandedMap = {};
                 for (const id of path) {
                   expandedUpdate[id] = true;

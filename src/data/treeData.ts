@@ -2,6 +2,7 @@ import localizations from './localizations.json';
 import languages from './languages.json';
 
 export type TreeNode = {
+  id: string;
   label: { en: string; ru: string };
   type: 'language' | 'family' | 'group';
   appeared?: Appeared;
@@ -21,6 +22,7 @@ function createNode(id: string): TreeNode {
   const locData = localizations[id as keyof typeof localizations];
 
   const node: TreeNode = {
+    id: id,
     label: {
       en: locData.eng,
       ru: locData.rus
