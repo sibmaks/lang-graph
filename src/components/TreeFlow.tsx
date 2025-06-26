@@ -75,7 +75,7 @@ const TreeFlow = () => {
     setSearchLanguages(languages);
   }, [lang]);
 
-  const generateLabel = useCallback((nodeId: string, node: TreeNode): React.ReactNode => {
+  const generateLabel = useCallback((node: TreeNode): React.ReactNode => {
     const hasChildren = node.children && Object.keys(node.children).length > 0;
     return (
       <Container fluid className="p-0" style={{ width: '100%' }}>
@@ -88,18 +88,18 @@ const TreeFlow = () => {
           {hasChildren && (
             <Col xs={4} className="p-0" style={{ flexShrink: 0 }}>
               <Button
-                variant="outline-secondary"
+                variant={expanded[node.id] ? 'outline-secondary' : 'secondary'}
                 size="sm"
                 className="ms-1"
                 style={{ minWidth: '32px' }}
                 onClick={(e) => {
                   e.stopPropagation();
                   window.dispatchEvent(
-                    new CustomEvent('expand-node', { detail: nodeId })
+                    new CustomEvent('expand-node', { detail: node.id })
                   );
                 }}
               >
-                {expanded[nodeId] ?
+                {expanded[node.id] ?
                   <MaterialSymbolsKeyboardArrowDownRounded width={16} height={16} /> :
                   <MaterialSymbolsKeyboardArrowUpRounded width={16} height={16} />
                 }
@@ -171,7 +171,7 @@ const TreeFlow = () => {
       id: node.id,
       data: {
         caption: node.label,
-        label: generateLabel(node.id, node)
+        label: generateLabel(node)
       },
       position: { x: nodeX, y: nodeY },
       type: parentId === null ? 'input' : (hasChildren ? undefined : 'output'),
@@ -246,7 +246,7 @@ const TreeFlow = () => {
           data: {
             ...node.data,
             caption: treeNode.label,
-            label: generateLabel(node.id, treeNode)
+            label: generateLabel(treeNode)
           }
         } as Node<NodeData>;
       })
